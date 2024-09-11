@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "d2d96bb9-57bd-4222-adfd-32a27625c413",
+		"name": "API Via Cep",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17105854"
+	},
+	"item": [
+		{
+			"name": "Consultas de CEP",
+			"item": [
+				{
+					"name": "Consultar CEP formato json",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Valores da consulta iguais\", () => {\r",
+									"  const responseJson = pm.response.json();\r",
+									"  pm.expect(responseJson.cep).to.eqls(\"09210-780\");\r",
+									"  pm.expect(responseJson.logradouro).to.eqls(\"Rua Pedro Álvares Cabral\");\r",
+									"  pm.expect(responseJson.complemento).to.eqls(\"\");\r",
+									"  pm.expect(responseJson.unidade).to.eqls(\"\");\r",
+									"  pm.expect(responseJson.bairro).to.eqls(\"Santa Terezinha\");\r",
+									"  pm.expect(responseJson.localidade).to.eqls(\"Santo André\");\r",
+									"  pm.expect(responseJson.uf).to.eqls(\"SP\");\r",
+									"  pm.expect(responseJson.estado).to.eqls(\"São Paulo\");\r",
+									"  pm.expect(responseJson.regiao).to.eqls(\"Sudeste\");\r",
+									"  pm.expect(responseJson.ibge).to.eqls(\"3547809\");\r",
+									"  pm.expect(responseJson.gia).to.eqls(\"6269\");\r",
+									"  pm.expect(responseJson.ddd).to.eqls(\"11\");\r",
+									"  pm.expect(responseJson.siafi).to.eqls(\"7057\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code é 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ws/{{cep}}/json",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws",
+								"{{cep}}",
+								"json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar CEP formato XML",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const xml2js = require('xml2js');\r",
+									"let jsonResponse;\r",
+									"xml2js.parseString(pm.response.text(),{explicitArray: false}, (err, result)=>{\r",
+									"    jsonResponse = result;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valores da consulta iguais\", () => {\r",
+									"  pm.expect(jsonResponse.xmlcep.cep).to.eqls(\"09210-780\");\r",
+									"  pm.expect(jsonResponse.xmlcep.logradouro).to.eqls(\"Rua Pedro Álvares Cabral\");\r",
+									"  pm.expect(jsonResponse.xmlcep.complemento).to.eqls(\"\");\r",
+									"  pm.expect(jsonResponse.xmlcep.unidade).to.eqls(\"\");\r",
+									"  pm.expect(jsonResponse.xmlcep.bairro).to.eqls(\"Santa Terezinha\");\r",
+									"  pm.expect(jsonResponse.xmlcep.localidade).to.eqls(\"Santo André\");\r",
+									"  pm.expect(jsonResponse.xmlcep.uf).to.eqls(\"SP\");\r",
+									"  pm.expect(jsonResponse.xmlcep.estado).to.eqls(\"São Paulo\");\r",
+									"  pm.expect(jsonResponse.xmlcep.ibge).to.eqls(\"3547809\");\r",
+									"  pm.expect(jsonResponse.xmlcep.gia).to.eqls(\"6269\");\r",
+									"  pm.expect(jsonResponse.xmlcep.ddd).to.eqls(\"11\");\r",
+									"  pm.expect(jsonResponse.xmlcep.siafi).to.eqls(\"7057\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code é 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ws/{{cep}}/xml",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws",
+								"{{cep}}",
+								"xml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar CEP incorreto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code é 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ws/{{cep_incorreto}}/json",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ws",
+								"{{cep_incorreto}}",
+								"json"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
