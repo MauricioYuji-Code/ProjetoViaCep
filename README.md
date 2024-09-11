@@ -17,5 +17,5 @@
 ### Execução Local
 Abra o terminal e vá até o diretório, em seguida execute o seguinte comando:
 ```bash
-C:\ProjetoViaCep> newman run Collection/APIViaCep.postman_collection.json -e Environment/ViaCep-Prod.postman_environment.json -r htmlextra
+C:\ProjetoViaCep> newman run Collection/APIViaCep.postman_collection.json -e Environment/ViaCep-Prod.postman_environment.json -r html
 ```
